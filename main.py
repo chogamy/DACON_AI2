@@ -6,6 +6,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 
+from src.args_train import parse_train
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -41,6 +42,10 @@ if __name__ == "__main__":
     parser.add_argument("--train", default=None, required=True)
 
     args = parser.parse_args()
+    
+    parse_train(args, os.path.join(DIR, 'args', 'train'))
+    
+
 
     
     # set seed

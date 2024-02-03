@@ -1,4 +1,4 @@
-output_dir: ./outputs #str
+output_dir: ./results #str
 overwrite_output_dir: false # bool = False
 do_train: false # bool = False
 do_eval: false # bool = False

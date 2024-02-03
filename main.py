@@ -3,10 +3,9 @@ import argparse
 
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from transformers import DataCollatorForLanguageModeling
-from transformers import Trainer, TrainingArguments
 
 from src.args_train import parse_train
+from src.args_peft import parse_peft
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -44,65 +43,29 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     parse_train(args, os.path.join(DIR, 'args', 'train'))
-    
+    parse_peft(args, os.path.join(DIR, 'args', 'peft'))
 
-
-    
     # set seed
+    args.train['seed'] = args.seed
+
+    model = AutoModelForCausalLM.from_pretrained(args.model)
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
 
     if args.mode == 'train':
         from src.train import train
 
-        train()
+        dataset = os.path.join(DIR, 'data', 'train.txt')
 
-        assert 1==0
-        model = AutoModelForCausalLM.from_pretrained(args.model)
-        tokenizer = AutoTokenizer.from_pretrained(args.model)
+        train(args, model, tokenizer, dataset)
 
-        model = peft(args, model)
-
-        train_dataset = load_dataset('text', data_files={'train': os.path.join(DIR, 'data', 'train.txt')})
-
-        print(train_dataset)
-        from pprint import pprint
-        pprint(train_dataset['train']['text'][:5])
-
-        def tokenize_function(examples):
-            return tokenizer(examples['text'].strip())
-    
-        tokenized_datasets = train_dataset.map(tokenize_function, 
-                                            batched=True, 
-                                            remove_columns=["text"], 
-                                            load_from_cache_file=False, 
-                                            desc="Data Pre-processing")
-
-
-        data_collator = DataCollatorForLanguageModeling(
-            tokenizer=tokenizer, mlm=False
-        )
-
-        training_args = TrainingArguments(
-            output_dir='./results',          # output directory
-            num_train_epochs=3,              # total number of training epochs
-            per_device_train_batch_size=1,  # batch size per device during training
-            warmup_steps=500,                # number of warmup steps for learning rate scheduler
-            weight_decay=0.01,               # strength of weight decay
-            logging_dir='./logs',            # directory for storing logs
-        )
-
-
-        trainer = Trainer(
-            model=model,                         # the instantiated 🤗 Transformers model to be trained
-            args=training_args,                  # training arguments, defined above
-            train_dataset=tokenized_datasets['train'],         # training dataset
-            data_collator=data_collator,         # collator to use for training
-        )
-
-        trainer.train()
-        args.peft['save_path']
-        # model.save()
+        
     elif args.mode == 'infer':
-        pass
+        from src.train import infer
+
+        dataset = os.path.join(DIR, 'data', 'test.txt')
+
+        infer(args, model, tokenizer, dataset)
+        
     else:
         raise ValueError('Invalid mode')
         

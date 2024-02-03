@@ -2,5 +2,5 @@ name: lora
 r: 8
 alpha: 32 
 dropout: 0.1
-save_dir: null
+output_dir: null
         

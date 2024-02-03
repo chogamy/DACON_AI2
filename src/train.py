@@ -31,14 +31,18 @@ def train(args, model, tokenizer, dataset):
     model = peft(args, model)
 
     training_args = TrainingArguments(
-            output_dir=args.train['output_dir'],          
+            output_dir=args.train['output_dir'],
+            logging_dir=args.train['logging_dir'],
+            logging_strategy=args.train['logging_strategy'],
+            save_strategy=args.train['save_strategy'],
+            do_train=args.train['do_train'],
             num_train_epochs=args.train['num_train_epochs'],
             per_device_train_batch_size=args.train['per_device_train_batch_size'],
-            warmup_steps=500,                # number of warmup steps for learning rate scheduler
-            weight_decay=0.01,               # strength of weight decay
-            logging_dir='./logs',            # directory for storing logs
+            warmup_steps=args.train['warmup_steps'],
+            weight_decay=args.train['weight_decay'],
         )
 
+    
 
     trainer = Trainer(
         model=model,                         # the instantiated 🤗 Transformers model to be trained

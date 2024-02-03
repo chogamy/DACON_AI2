@@ -6,23 +6,23 @@ def parse_train(args, path):
     
     file_path = os.path.join(path, args.train)
     
-
     if os.path.isfile(file_path):
         with open(file_path) as f:
             args.train = yaml.full_load(f)
     else:
-        args.train = args.train.split(".")[0]
-        pattern = re.compile('e\d+b\d+lr\d+-\d+.yaml')
         
+        e = re.compile('e\d+')
+        b = re.compile('b\d+')
+        lr = re.compile('lr\d+e-\d+')
 
         with open(os.path.join(path, 'basic.yaml')) as f:
-            args.train = yaml.full_load(f)
+            basic = yaml.full_load(f)
         
-        
-        # e3b2lr2e-5.yaml
-    
+        basic['num_train_epochs'] = int(e.findall(args.train)[0][1:])
+        basic['per_device_train_batch_size'] = int(b.findall(args.train)[0][1:])
+        basic['learning_rate'] = lr.findall(args.train)[0][2:]
 
-    assert 1==0
+        with open(file_path, 'w') as f:
+            yaml.dump(basic, f)
 
-
-    pass
+        args.train = basic

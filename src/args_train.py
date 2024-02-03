@@ -4,7 +4,7 @@ import yaml
 
 def parse_train(args, path):
     
-    file_path = os.path.join(path, args.train)
+    file_path = os.path.join(path, f"{args.train}.yaml")
     
     if os.path.isfile(file_path):
         with open(file_path) as f:

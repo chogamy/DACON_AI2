@@ -10,7 +10,7 @@ def parse_peft(args, path):
         with open(file_path) as f:
             args.peft = yaml.full_load(f)
         
-        args.peft['output_dir'] = os.path.join(args.train["output_dir"], args.model, args.peft['name'])
+        args.peft['output_dir'] = args.train["output_dir"]
         print(f"saving at: {args.peft['output_dir']}")
     else:
         print(file_path)

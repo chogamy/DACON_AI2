@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
         
     elif args.mode == 'infer':
-        from src.train import infer
+        from src.infer import infer
 
         dataset = os.path.join(DIR, 'data', 'test.txt')
 

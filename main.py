@@ -1,7 +1,6 @@
 import os
 import argparse
 
-from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from src.args_train import parse_train
@@ -9,35 +8,12 @@ from src.args_peft import parse_peft
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
-def peft(args, model):
-    from peft import TaskType, get_peft_model
-
-    if args.peft == 'lora':
-        from peft import LoraConfig
-        
-        peft_config = LoraConfig(
-            task_type=TaskType.CAUSAL_LM, inference_mode=False, r=8, lora_alpha=32, lora_dropout=0.1
-        )
-    elif args.peft == None:
-        pass
-    else:
-        raise ValueError("Invalid PEFT")
-    
-    if args.peft == None:
-        pass
-    else:
-        model = get_peft_model(model, peft_config)
-        print(model.print_trainable_parameters())
-
-    return model
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", default='train', type=str, required=True, choices=['train', 'infer'])
     parser.add_argument("--seed", default=42, type=int, required=False)
     parser.add_argument("--model", default=None, type=str, required=True)
-    parser.add_argument("--peft", default=None, required=True, choices=['lora'])
+    parser.add_argument("--peft", default='lora', required=True, choices=['lora'])
     parser.add_argument("--train", default=None, required=True)
 
     args = parser.parse_args()

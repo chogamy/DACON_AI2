@@ -3,3 +3,4 @@ logs/
 results/
 output_dir/
 checkpoints/
+log

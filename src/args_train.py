@@ -21,6 +21,9 @@ def parse_train(args, path):
         basic['num_train_epochs'] = int(e.findall(args.train)[0][1:])
         basic['per_device_train_batch_size'] = int(b.findall(args.train)[0][1:])
         basic['learning_rate'] = float(lr.findall(args.train)[0][2:])
+        basic['logging_dir'] = os.path.join(basic['logging_dir'], args.model, args.peft)
+        basic['output_dir'] = os.path.join(basic['output_dir'], args.model, args.peft)
+        
         
         with open(file_path, 'w') as f:
             yaml.dump(basic, f)

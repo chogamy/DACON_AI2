@@ -45,10 +45,10 @@ def train(args, model, tokenizer, dataset):
     
 
     trainer = Trainer(
-        model=model,                         # the instantiated 🤗 Transformers model to be trained
-        args=training_args,                  # training arguments, defined above
-        train_dataset=tokenized_datasets['train'],         # training dataset
-        data_collator=data_collator,         # collator to use for training
+        model=model,
+        args=training_args,
+        train_dataset=tokenized_datasets['train'],
+        data_collator=data_collator,
     )
 
     trainer.train()

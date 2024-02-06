@@ -29,13 +29,15 @@ def train(args, model, tokenizer, dataset):
 
 
     model = peft(args, model)
-
+    # model.config.gradient_checkpointing = True
+    
     training_args = TrainingArguments(
             output_dir=args.train['output_dir'],
             logging_dir=args.train['logging_dir'],
             logging_strategy=args.train['logging_strategy'],
             save_strategy=args.train['save_strategy'],
             do_train=args.train['do_train'],
+            gradient_checkpointing=args.train['gradient_checkpointing'],
             num_train_epochs=args.train['num_train_epochs'],
             per_device_train_batch_size=args.train['per_device_train_batch_size'],
             warmup_steps=args.train['warmup_steps'],

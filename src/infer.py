@@ -16,15 +16,31 @@ def infer(args, model, tokenizer, dataset):
     model.to('cuda')
     model.eval()
 
+    tokenizer.padding_side = "left"
+
+    batch_size = 8
+
     with open(os.path.join(args.train['output_dir'], 'output.txt'), 'w') as f:
         with torch.no_grad():
-            for line in tqdm(test_dataset['test']['text'], desc='infer'):
-                inputs = tokenizer(line.strip(), return_tensors='pt')
-                outputs = model.generate(input_ids=inputs['input_ids'].to('cuda'), max_new_tokens=10)    
-                
+            for i in tqdm(range(0, len(test_dataset['test']['text']), batch_size), desc='infer'):
+                batch = test_dataset['test']['text'][i:i+batch_size]
+                inputs = tokenizer(batch, padding=True, return_tensors='pt')
+                outputs = model.generate(input_ids=inputs['input_ids'].to('cuda'), max_new_tokens=1000)
+
                 outputs = tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)
+
+                for output in outputs:                    
+                    q, a = output.split("답변: ", 1)
+                    f.write(f"{a}\n")
+                    
+
+            # for line in tqdm(test_dataset['test']['text'], desc='infer'):
+            #     inputs = tokenizer(line.strip(), return_tensors='pt')
+            #     outputs = model.generate(input_ids=inputs['input_ids'].to('cuda'), max_new_tokens=512)    
                 
-                q, a = outputs[0].split("답변: ", 1)
+            #     outputs = tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)
                 
-                f.write(f"{a}\n")
+            #     q, a = outputs[0].split("답변: ", 1)
+                
+            #     f.write(f"{a}\n")
     

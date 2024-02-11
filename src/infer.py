@@ -79,6 +79,11 @@ def infer(args, model, tokenizer, dataset):
                             outputs = tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)
                             
                             q, a = outputs[0].split("답변: ", 1)
+                            a = a.replace("답변:", "")
+                            a = a.replace("질문:", "")
+                            a = a.replace("\n", "")
+                            a = a.strip()
+                            
                         
                         answers.append(a)
                     

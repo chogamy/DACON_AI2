@@ -35,11 +35,12 @@ def infer(args, model, tokenizer, dataset):
 
                     for output in outputs:                    
                         q, a = output.split("답변:", 1)
-                        if "관계는 무엇인가요?" in q:
-                            a = "모르겠습니다."
-                        else:
-                            a = a.replace("\n", "")
-                            a = a.strip()
+                        # 안한게 더 좋네
+                        # if "관계는 무엇인가요?" in q:
+                        #     a = "모르겠습니다."
+                        # else:
+                        a = a.replace("\n", "")
+                        a = a.strip()
                         f.write(f"{a}\n")
     else:
         with open(os.path.join(args.train['output_dir'], 'output.txt'), 'w') as f:

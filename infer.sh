@@ -5,4 +5,4 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
                     --seed 42 \
                     --model maywell/Synatra-42dot-1.3B \
                     --peft lora \
-                    --train e5b8lr2e-5 \
+                    --train e3b4lr2e-5 \

@@ -13,6 +13,7 @@ if __name__ == "__main__":
     parser.add_argument("--mode", default='train', type=str, required=True, choices=['train', 'infer'])
     parser.add_argument("--seed", default=42, type=int, required=False)
     parser.add_argument("--model", default=None, type=str, required=True)
+    parser.add_argument("--data", default=None, type=str, required=True)
     parser.add_argument("--peft", default='lora', required=True, choices=['lora'])
     parser.add_argument("--train", default=None, required=True)
 
@@ -30,7 +31,8 @@ if __name__ == "__main__":
     if args.mode == 'train':
         from src.train import train
 
-        dataset = os.path.join(DIR, 'data', 'multi_train.txt')
+        # dataset = os.path.join(DIR, 'data', 'multi_train.txt')
+        dataset = os.path.join(DIR, 'data', f"{args.data}.txt")
 
         train(args, model, tokenizer, dataset)
 

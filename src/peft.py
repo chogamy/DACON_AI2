@@ -1,8 +1,10 @@
 from peft import TaskType, get_peft_model
 
 def peft(args, model):
-    
-    if args.peft['name'] == 'lora':
+
+    if args.peft['name'] == None:
+        return model
+    elif args.peft['name'] == 'lora':
         from peft import LoraConfig
         
         peft_config = LoraConfig(

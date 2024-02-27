@@ -32,6 +32,7 @@ if __name__ == "__main__":
         from src.train import train
 
         # dataset = os.path.join(DIR, 'data', 'multi_train.txt')
+        # dataset = os.path.join(DIR, 'data', 'all_text.txt')
         dataset = os.path.join(DIR, 'data', f"{args.data}.txt")
 
         train(args, model, tokenizer, dataset)

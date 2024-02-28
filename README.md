@@ -11,6 +11,7 @@
 7. 넵튠도 써볼 수 있겠지 - not good
 8. domain adaptation 더 해보자
 9. multi_train 셋을 더 뽑아서 돌려보자
+10. 카테고리 별로 따로 모델 만들기? MOE
 
 ---
 

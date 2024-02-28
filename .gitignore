@@ -4,3 +4,5 @@ results/
 output_dir/
 checkpoints/
 log
+
+output.txt

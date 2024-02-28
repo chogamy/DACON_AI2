@@ -22,7 +22,7 @@ def parse_train(args, path):
         basic['per_device_train_batch_size'] = int(b.findall(args.train)[0][1:])
         basic['learning_rate'] = float(lr.findall(args.train)[0][2:])
         if args.mode == 'post_train':
-            basic['learning_rate_scheduler'] = 'constant'
+            basic['lr_scheduler_type'] = 'constant'
         basic['logging_dir'] = os.path.join(basic['logging_dir'], args.model, args.peft)
         basic['output_dir'] = os.path.join(basic['output_dir'], args.mode, args.model, args.peft)
         

@@ -15,7 +15,7 @@ def infer(args, model, tokenizer, dataset):
     pprint(test_dataset['test']['text'][:5])
     print('-------------------------')
 
-    model = PeftModel.from_pretrained(model, args.train['output_dir'])
+    model = PeftModel.from_pretrained(model, args.path)
     model.to('cuda')
     model.eval()
 

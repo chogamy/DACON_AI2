@@ -15,6 +15,8 @@ def infer(args, model, tokenizer, dataset):
     pprint(test_dataset['test']['text'][:5])
     print('-------------------------')
 
+    model = PeftModel.from_pretrained(model, '/root/DACON_AI2/checkpoints/post_train/maywell/Synatra-42dot-1.3B/lora/checkpoint-2892')
+    model = model.merge_and_unload()
     model = PeftModel.from_pretrained(model, args.path)
     model.to('cuda')
     model.eval()
@@ -24,7 +26,7 @@ def infer(args, model, tokenizer, dataset):
 
     if BATCH:
         batch_size = 8
-        with open(os.path.join(args.train['output_dir'], 'output.txt'), 'w') as f:
+        with open('output.txt', 'w') as f:
             with torch.no_grad():
                 for i in tqdm(range(0, len(test_dataset['test']['text']), batch_size), desc='infer'):
                     batch = test_dataset['test']['text'][i:i+batch_size]

@@ -12,6 +12,8 @@
 8. domain adaptation 더 해보자
 9. multi_train 셋을 더 뽑아서 돌려보자
 10. 카테고리 별로 따로 모델 만들기? MOE
+11. post train때만 넵튠 섞어볼까
+12. lr 5e-4로 튜닝해보자
 
 ---
 

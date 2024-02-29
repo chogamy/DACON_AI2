@@ -4,7 +4,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
                     --mode infer \
                     --seed 42 \
                     --data test \
-                    --post_train_path /root/DACON_AI2/checkpoints/post_train/maywell/Synatra-42dot-1.3B/lora/checkpoint-1446 \
+                    --post_train_path /root/DACON_AI2/checkpoints/post_train/maywell/Synatra-42dot-1.3B/lora/ \
                     --train_path /root/DACON_AI2/checkpoints/train/maywell/Synatra-42dot-1.3B/lora \
                     --model maywell/Synatra-42dot-1.3B \
                     --peft lora \

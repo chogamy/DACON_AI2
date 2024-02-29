@@ -15,9 +15,9 @@ def infer(args, model, tokenizer, dataset):
     pprint(test_dataset['test']['text'][:5])
     print('-------------------------')
 
-    model = PeftModel.from_pretrained(model, '/root/DACON_AI2/checkpoints/post_train/maywell/Synatra-42dot-1.3B/lora/checkpoint-2892')
+    model = PeftModel.from_pretrained(model, args.post_train_path)
     model = model.merge_and_unload()
-    model = PeftModel.from_pretrained(model, args.path)
+    model = PeftModel.from_pretrained(model, args.train_path)
     model.to('cuda')
     model.eval()
 

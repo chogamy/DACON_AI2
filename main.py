@@ -19,6 +19,11 @@ if __name__ == "__main__":
     parser.add_argument("--peft", default='lora', required=True, choices=['lora', 'none']) 
     parser.add_argument("--train", default=None, required=True)
 
+
+    #########################
+    parser.add_argument("--local_rank", default=None, required=False)
+    parser.add_argument("--ds_config", default=None, required=True)
+
     args = parser.parse_args()
     
     parse_train(args, os.path.join(DIR, 'args', 'train'))

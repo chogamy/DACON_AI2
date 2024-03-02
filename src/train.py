@@ -1,3 +1,5 @@
+import json
+
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 from datasets import load_dataset
@@ -30,6 +32,10 @@ def train(args, model, tokenizer, dataset):
 
     model = peft(args, model)
     # model.config.gradient_checkpointing = True
+
+    if args.ds_config is not None:
+        with open(args.ds_config, 'r') as f:
+            args.ds_config = json.load(f)
     
     training_args = TrainingArguments(
             output_dir=args.train['output_dir'],
@@ -44,6 +50,7 @@ def train(args, model, tokenizer, dataset):
             per_device_train_batch_size=args.train['per_device_train_batch_size'],
             warmup_steps=args.train['warmup_steps'],
             weight_decay=args.train['weight_decay'],
+            deepspeed=args.ds_config
         )
 
     

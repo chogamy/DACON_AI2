@@ -31,6 +31,7 @@ if __name__ == "__main__":
 
     # set seed
     args.train['seed'] = args.seed
+    # 윤채원 헤헤헤헤헤
 
     model = AutoModelForCausalLM.from_pretrained(args.model)
     tokenizer = AutoTokenizer.from_pretrained(args.model)

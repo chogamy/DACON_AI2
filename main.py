@@ -16,13 +16,13 @@ if __name__ == "__main__":
     parser.add_argument("--post_train_path", default=None, type=str, required=False)
     parser.add_argument("--train_path", default=None, type=str, required=False)
     parser.add_argument("--data", default=None, type=str, required=True, choices=['multi_train', 'all_text', 'train', 'test'])
-    parser.add_argument("--peft", default='lora', required=True, choices=['lora', 'none']) 
+    parser.add_argument("--peft", default='lora', required=True, choices=['lora', 'none', 'ia3']) 
     parser.add_argument("--train", default=None, required=True)
 
 
     #########################
     parser.add_argument("--local_rank", default=None, required=False)
-    parser.add_argument("--ds_config", default=None, required=True)
+    parser.add_argument("--ds_config", default=None, required=False)
 
     args = parser.parse_args()
     

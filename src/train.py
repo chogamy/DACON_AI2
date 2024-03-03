@@ -29,10 +29,8 @@ def train(args, model, tokenizer, dataset):
         tokenizer=tokenizer, mlm=False
     )
 
-
     model = peft(args, model)
-    # model.config.gradient_checkpointing = True
-
+    
     if args.ds_config is not None:
         with open(args.ds_config, 'r') as f:
             args.ds_config = json.load(f)

@@ -35,6 +35,9 @@ if __name__ == "__main__":
 
     model = AutoModelForCausalLM.from_pretrained(args.model)
     tokenizer = AutoTokenizer.from_pretrained(args.model)
+    if tokenizer.pad_token is None:
+        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+        model.resize_token_embeddings(len(tokenizer))
 
     if args.mode in ['train', 'post_train']:
         from src.train import train

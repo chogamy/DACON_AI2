@@ -41,6 +41,7 @@ def train(args, model, tokenizer, dataset):
             logging_strategy=args.train['logging_strategy'],
             learning_rate=args.train['learning_rate'],
             lr_scheduler_type=args.train['lr_scheduler_type'],
+            optim=args.train['optim'],
             save_strategy=args.train['save_strategy'],
             do_train=args.train['do_train'],
             gradient_checkpointing=args.train['gradient_checkpointing'],
